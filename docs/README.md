@@ -10,7 +10,7 @@ npx create-next-app@15 .
 
 ✔ Would you like to use TypeScript? … No
 ✔ Which linter would you like to use? › None
-✔ Would you like to use Tailwind CSS? … No
+✔ Would you like to use Tailwind CSS? … Yes
 ✔ Would you like your code inside a `src/` directory? … Yes
 ✔ Would you like to use App Router? (recommended) … Yes
 ✔ Would you like to use Turbopack? (recommended) … No

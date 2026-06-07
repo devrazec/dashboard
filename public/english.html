@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Dashboard App</title>
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Geist:wght@300;400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Icons -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed-variant": "#004f53",
+                        "on-secondary": "#053900",
+                        "surface-tint": "#00dce5",
+                        "inverse-on-surface": "#2e3037",
+                        "tertiary-fixed-dim": "#d1bcff",
+                        "secondary-fixed": "#79ff5b",
+                        "surface-dim": "#111319",
+                        "surface-container-low": "#191b22",
+                        "on-tertiary-fixed": "#23005b",
+                        "outline": "#849495",
+                        "surface-container-lowest": "#0c0e14",
+                        "on-secondary-fixed-variant": "#095300",
+                        "outline-variant": "#3a494a",
+                        "on-tertiary-fixed-variant": "#5700c9",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#e5d7ff",
+                        "primary": "#e9feff",
+                        "surface-container-high": "#282a30",
+                        "error": "#ffb4ab",
+                        "inverse-primary": "#00696e",
+                        "on-secondary-fixed": "#022100",
+                        "on-secondary-container": "#0f6d00",
+                        "tertiary-fixed": "#e9ddff",
+                        "inverse-surface": "#e2e2eb",
+                        "on-primary": "#003739",
+                        "background": "#111319",
+                        "surface-bright": "#373940",
+                        "on-background": "#e2e2eb",
+                        "on-primary-container": "#006c71",
+                        "surface-container-highest": "#33343b",
+                        "surface": "#111319",
+                        "on-primary-fixed": "#002021",
+                        "secondary": "#d7ffc5",
+                        "on-error": "#690005",
+                        "primary-fixed": "#63f7ff",
+                        "primary-container": "#00f5ff",
+                        "on-tertiary": "#3c0090",
+                        "on-tertiary-container": "#751fff",
+                        "on-error-container": "#ffdad6",
+                        "tertiary": "#fef8ff",
+                        "surface-variant": "#33343b",
+                        "secondary-fixed-dim": "#2ae500",
+                        "primary-fixed-dim": "#00dce5",
+                        "secondary-container": "#2ff801",
+                        "surface-container": "#1e1f26",
+                        "on-surface": "#e2e2eb",
+                        "on-surface-variant": "#b9caca"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "grid-line": "1px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Space Grotesk"],
+                        "headline-lg-mobile": ["Space Grotesk"],
+                        "body-md": ["Geist"],
+                        "headline-lg": ["Space Grotesk"],
+                        "label-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.05em", "fontWeight": "500" }]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Cyber-Grid Background */
+        .cyber-grid {
+            background-image:
+                linear-gradient(to right, rgba(0, 220, 229, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 220, 229, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Scanline Effect */
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(0deg, rgba(0, 220, 229, 0) 0%, rgba(0, 220, 229, 0.05) 50%, rgba(0, 220, 229, 0) 100%);
+            opacity: 0.1;
+            position: absolute;
+            bottom: 100%;
+            animation: scanline 8s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% {
+                bottom: 100%;
+            }
+
+            100% {
+                bottom: -100%;
+            }
+        }
+
+        .glass-card {
+            background: rgba(20, 23, 31, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 220, 229, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 220, 229, 0.6);
+            box-shadow: inset 0 0 15px rgba(0, 220, 229, 0.1), 0 0 20px rgba(0, 220, 229, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .neon-text-glow {
+            text-shadow: 0 0 8px rgba(0, 220, 229, 0.5);
+        }
+
+        .glow-border-active {
+            box-shadow: inset 0 0 10px rgba(0, 220, 229, 0.2);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background text-on-background font-body-md selection:bg-surface-tint/30 selection:text-primary overflow-x-hidden">
+    <!-- Top Navigation Bar -->
+    <nav
+        class="fixed top-0 w-full z-50 bg-surface/70 dark:bg-surface/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-[inset_0_-1px_0_0_rgba(0,220,229,0.1)] h-16 flex justify-between items-center px-margin-desktop">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary text-3xl" data-icon="query_stats">query_stats</span>
+            <span
+                class="font-display-lg text-headline-lg tracking-widest text-primary dark:text-surface-tint uppercase">Dashboard
+            </span>
+        </div>
+        <div class="hidden md:flex items-center space-x-8">
+            <a class="font-label-sm text-label-sm uppercase text-primary dark:text-surface-tint font-bold border-b-2 border-primary tracking-widest"
+                href="#">Services</a>
+            <a class="font-label-sm text-label-sm uppercase text-on-surface-variant/70 hover:text-primary transition-colors tracking-widest"
+                href="#">Systems</a>
+            <a class="font-label-sm text-label-sm uppercase text-on-surface-variant/70 hover:text-primary transition-colors tracking-widest"
+                href="#">Network</a>
+            <a class="font-label-sm text-label-sm uppercase text-on-surface-variant/70 hover:text-primary transition-colors tracking-widest"
+                href="#">Security</a>
+        </div>
+        <button class="active:scale-95 transition-transform text-primary">
+            <span class="material-symbols-outlined text-2xl"
+                data-icon="settings_input_component">settings_input_component</span>
+        </button>
+    </nav>
+    <!-- Sidebar (Desktop) -->
+    <aside
+        class="fixed left-0 top-16 bottom-0 hidden lg:flex flex-col w-64 bg-surface-dim/90 dark:bg-surface-dim/95 backdrop-blur-md border-r border-outline-variant/10 shadow-2xl z-40 py-6">
+        <div class="px-6 mb-8">
+            <span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant/50">Core
+                Services</span>
+        </div>
+        <nav class="flex flex-col space-y-2">
+            <div
+                class="bg-primary-container/20 text-primary-container border-l-4 border-primary-container px-6 py-3 flex items-center gap-4 cursor-pointer">
+                <span class="material-symbols-outlined" data-icon="insights">insights</span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wider">BI Strategy</span>
+            </div>
+            <div
+                class="text-on-surface-variant px-6 py-3 hover:bg-surface-container-high/50 flex items-center gap-4 cursor-pointer transition-all">
+                <span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wider">Visualization</span>
+            </div>
+            <div
+                class="text-on-surface-variant px-6 py-3 hover:bg-surface-container-high/50 flex items-center gap-4 cursor-pointer transition-all">
+                <span class="material-symbols-outlined" data-icon="api">api</span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wider">APIs</span>
+            </div>
+            <div
+                class="text-on-surface-variant px-6 py-3 hover:bg-surface-container-high/50 flex items-center gap-4 cursor-pointer transition-all">
+                <span class="material-symbols-outlined" data-icon="phone_iphone">phone_iphone</span>
+                <span class="font-label-sm text-label-sm uppercase tracking-wider">Mobile</span>
+            </div>
+        </nav>
+        <div class="mt-auto px-6 py-4 border-t border-outline-variant/10">
+            <div class="flex items-center gap-2 mb-2">
+                <div
+                    class="w-2 h-2 rounded-full bg-secondary-fixed shadow-[0_0_8px_rgba(121,255,91,0.8)] animate-pulse">
+                </div>
+                <span class="font-label-sm text-[10px] uppercase text-secondary-fixed">System Live</span>
+            </div>
+            <p class="font-label-sm text-[10px] text-on-surface-variant/40">NODE-04 // STABLE</p>
+        </div>
+    </aside>
+    <!-- Main Canvas -->
+    <main class="lg:pl-64 pt-16 min-h-screen relative overflow-hidden">
+        <!-- Background Decorative Elements -->
+        <div class="absolute inset-0 cyber-grid opacity-20 pointer-events-none"></div>
+        <div class="scanline"></div>
+        <!-- Hero Section -->
+        <section
+            class="relative px-margin-mobile md:px-margin-desktop py-12 md:py-24 border-b border-outline-variant/10">
+            <div class="max-w-5xl mx-auto">
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-center gap-4">
+                        <span
+                            class="font-label-sm text-label-sm uppercase text-primary border border-primary/30 px-3 py-1 rounded-full bg-primary/5">Technical
+                            Specification V4.0</span>
+                        <div class="h-px flex-1 bg-gradient-to-right from-primary/30 to-transparent"></div>
+                    </div>
+                    <h1 class="font-display-lg text-display-lg text-primary tracking-tighter max-w-3xl leading-none">
+                        ENGINEERING <span class="text-surface-tint neon-text-glow">DATA SUPREMACY</span> THROUGH
+                        ANALYTIC PRECISION.
+                    </h1>
+                    <p class="font-body-md text-on-surface-variant max-w-xl text-lg leading-relaxed">
+                        Deploying next-generation business intelligence pipelines and high-fidelity visualization
+                        systems for the deep-tech ecosystem.
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- Services Bento Grid -->
+        <section class="px-margin-mobile md:px-margin-desktop py-16">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+                    <!-- Feature Card 1: BI Strategy -->
+                    <div
+                        class="md:col-span-8 group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col justify-between min-h-[400px]">
+                        <div class="absolute top-0 right-0 p-4 font-label-sm text-on-surface-variant/20">01 // STRAT
+                        </div>
+                        <div class="z-10">
+                            <span class="material-symbols-outlined text-surface-tint text-5xl mb-6"
+                                data-icon="architecture">architecture</span>
+                            <h3 class="font-headline-lg text-headline-lg text-primary mb-4">Architectural BI Strategy
+                            </h3>
+                            <p class="font-body-md text-on-surface-variant max-w-md">Comprehensive roadmap development
+                                for enterprise-scale data maturation. We design the skeletal framework of your
+                                analytical future.</p>
+                        </div>
+                        <div class="z-10 mt-12 flex flex-wrap gap-3">
+                            <span
+                                class="font-label-sm text-[10px] uppercase px-3 py-1 border border-outline-variant/40 text-on-surface-variant">Roadmapping</span>
+                            <span
+                                class="font-label-sm text-[10px] uppercase px-3 py-1 border border-outline-variant/40 text-on-surface-variant">Governance</span>
+                            <span
+                                class="font-label-sm text-[10px] uppercase px-3 py-1 border border-outline-variant/40 text-on-surface-variant">Scalability</span>
+                        </div>
+                        <!-- Abstract Image -->
+                        <div
+                            class="absolute bottom-0 right-0 w-1/2 h-full opacity-30 pointer-events-none group-hover:opacity-50 transition-opacity">
+                            <img alt="Technical schematic" class="w-full h-full object-cover"
+                                data-alt="A macro close-up of a futuristic high-tech motherboard with glowing cyan circuitry traces and pulses of light. The image features a dark, navy blue base with sharp, precision-engineered geometric patterns. Deep tech atmosphere, cold technical lighting, high contrast, cybernetic and analytical aesthetic."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuANoGscFKw3xwrkFVOaCP2E3VCsjmM7bZ33Rd2rb89dyUVT2L3bzCeLAkrOrUd_pBYVK0Bm_n071P3SQmOM9neIjjz4H8Y3_npIV9TowXGXWz1RJfpXKW4SwyfdJAA6jXudiOPn8F7seBt9egr4Y2n8_3Upf5jp7j1N2VoNmcxkvFBVmpzl1tl3lEiWVLSeF3ih36RH40wikIw8rxr97rA3sfS_VAho29eV9OeU76R8tTTAFX_Ev5PVUos8U_KO5ap0kwEExWu9m8oe" />
+                        </div>
+                    </div>
+                    <!-- Feature Card 2: Vis -->
+                    <div class="md:col-span-4 group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col">
+                        <div class="absolute top-0 right-0 p-4 font-label-sm text-on-surface-variant/20">02 // OPTIC
+                        </div>
+                        <span class="material-symbols-outlined text-surface-tint text-5xl mb-6"
+                            data-icon="monitoring">monitoring</span>
+                        <h3 class="font-headline-lg text-headline-lg text-primary mb-4">Real-time Visualization</h3>
+                        <p class="font-body-md text-on-surface-variant">High-frequency rendering engines for live data
+                            streams and complex temporal analysis.</p>
+                        <div class="mt-auto pt-8">
+                            <div
+                                class="w-full h-32 border border-outline-variant/20 rounded bg-surface-container-lowest/50 relative overflow-hidden">
+                                <!-- Simulated Chart -->
+                                <div class="absolute bottom-0 left-0 w-full flex items-end h-full px-2 gap-1">
+                                    <div class="bg-primary/20 w-full h-1/2 group-hover:h-2/3 transition-all"></div>
+                                    <div class="bg-primary/20 w-full h-3/4 group-hover:h-1/2 transition-all"></div>
+                                    <div class="bg-primary/20 w-full h-1/4 group-hover:h-3/4 transition-all"></div>
+                                    <div class="bg-primary/40 w-full h-2/3 group-hover:h-full transition-all"></div>
+                                    <div class="bg-primary/20 w-full h-1/2 group-hover:h-1/4 transition-all"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Feature Card 3: APIs -->
+                    <div class="md:col-span-4 group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col">
+                        <div class="absolute top-0 right-0 p-4 font-label-sm text-on-surface-variant/20">03 // CONN
+                        </div>
+                        <span class="material-symbols-outlined text-surface-tint text-5xl mb-6"
+                            data-icon="api">api</span>
+                        <h3 class="font-headline-lg text-headline-lg text-primary mb-4">Universal APIs</h3>
+                        <p class="font-body-md text-on-surface-variant">Standardized connection protocols for seamless
+                            cross-platform data ingestion and export.</p>
+                        <div class="mt-8 space-y-2">
+                            <div class="h-2 w-full bg-outline-variant/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-surface-tint w-3/4"></div>
+                            </div>
+                            <div class="flex justify-between font-label-sm text-[10px] text-on-surface-variant/60">
+                                <span>LATENCY: 12ms</span>
+                                <span>THROUGHPUT: 98%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Feature Card 4: Mobile Integration -->
+                    <div
+                        class="md:col-span-8 group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col md:flex-row gap-8">
+                        <div class="flex-1 flex flex-col justify-center">
+                            <div class="font-label-sm text-on-surface-variant/20 mb-2">04 // MOB</div>
+                            <span class="material-symbols-outlined text-surface-tint text-5xl mb-6"
+                                data-icon="phone_iphone">phone_iphone</span>
+                            <h3 class="font-headline-lg text-headline-lg text-primary mb-4">Edge Analytics</h3>
+                            <p class="font-body-md text-on-surface-variant">Deliver critical insights directly to mobile
+                                endpoints with optimized hardware acceleration and zero-latency caching.</p>
+                        </div>
+                        <div
+                            class="flex-1 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/10 overflow-hidden relative">
+                            <img alt="Mobile dashboard"
+                                class="w-full h-full object-cover grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+                                data-alt="A sleek, modern smartphone interface displaying complex data visualizations and 3D graphs in vibrant cyan and magenta. The phone is held in a dark, minimalist setting with sharp focus on the screen. The aesthetic is high-end digital design, with thin hairline strokes and glassmorphic elements reflecting a sophisticated data command center."
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBMU_BsYp2hweJHeRAandaNsiqqN6QBBVkRBuyhZN0Y5_CS67x2wHZK4WNUkSkkXi7OYTGqeKehwhsqFfcRVkgGUOaK5s754boQiDQzetIyX1e26K3ZUnd_VwcFfnoA8tLHIyXotq--oGC1WEdOeb4Td_3wJaXhlq6GpAS0JlpIar5_i3JBBoQfOsP3jE-zI1-L7kTcVQ31De8FzeMVqOruSRo__nOD0d3vMit-CQJgqdotQyCi5YiOolB00kugc5D4MjMhQ-zyunW" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Technical Specs Section -->
+        <section
+            class="px-margin-mobile md:px-margin-desktop py-24 bg-surface-container-lowest/50 border-y border-outline-variant/10">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="font-display-lg text-headline-lg text-primary uppercase tracking-tighter mb-8">Hardware
+                        Accelerated <br /><span class="text-surface-tint">Intelligence</span></h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-10 h-10 flex items-center justify-center rounded border border-primary/20 bg-primary/5">
+                                <span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
+                            </div>
+                            <div>
+                                <h4 class="font-label-sm text-label-sm uppercase text-primary mb-1">Sub-100ms Processing
+                                </h4>
+                                <p class="text-sm text-on-surface-variant">Proprietary engines optimized for high-volume
+                                    ingestion and instantaneous query response.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-10 h-10 flex items-center justify-center rounded border border-primary/20 bg-primary/5">
+                                <span class="material-symbols-outlined text-primary"
+                                    data-icon="security">security</span>
+                            </div>
+                            <div>
+                                <h4 class="font-label-sm text-label-sm uppercase text-primary mb-1">Encrypted Pipelines
+                                </h4>
+                                <p class="text-sm text-on-surface-variant">End-to-end TLS 1.3 encryption with
+                                    hardware-backed key storage and zero-trust protocols.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div
+                                class="w-10 h-10 flex items-center justify-center rounded border border-primary/20 bg-primary/5">
+                                <span class="material-symbols-outlined text-primary" data-icon="hub">hub</span>
+                            </div>
+                            <div>
+                                <h4 class="font-label-sm text-label-sm uppercase text-primary mb-1">Distributed Mesh
+                                </h4>
+                                <p class="text-sm text-on-surface-variant">Decentralized processing nodes ensuring
+                                    99.999% uptime across global infrastructure.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-square glass-card rounded-2xl flex items-center justify-center overflow-hidden">
+                        <img alt="CPU Core" class="w-full h-full object-cover"
+                            data-alt="An extreme macro view of a high-performance computer chip processor with intricate golden and cyan connections glowing under a cold spotlight. The background is a dark, abstract digital landscape of data streams. The lighting highlights the geometric precision of the engineering, creating a sense of raw computing power and technological mastery."
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3zKjXXH-LqjDPkIjwEAkorBZeTTCGb-5o_dd0iLXIAT_D4t-K7mM01f60Z2hEyXvsJmxNJjZwTd5U9NROhe4uZa0ZRCy0Q-1gwtKRwZQa_Kl2oUF9_hnx81yu-8hjGKe4pVmggYU8H5T32hWAkicAB5RY7uoI1rki_aufkX5auI0FN_bDuTr58x7o_zkUHoSa2BIOj92a85CqcLp2G66A56vBGth9Tniv1NV9-hj9SjFGRNgKbAMitlWUhIVbKK56LLjVxcNIFoqC" />
+                        <!-- Decorative Overlay -->
+                        <div class="absolute inset-0 border-[20px] border-surface/50 pointer-events-none"></div>
+                        <div class="absolute inset-0 cyber-grid opacity-30 pointer-events-none"></div>
+                    </div>
+                    <!-- Technical Callout -->
+                    <div
+                        class="absolute -bottom-6 -left-6 glass-card p-4 rounded-lg border-primary/40 shadow-xl max-w-[200px]">
+                        <p class="font-label-sm text-[10px] text-primary uppercase mb-1">Core Sync Status</p>
+                        <div class="flex items-center gap-2">
+                            <div class="h-1 flex-1 bg-primary/20 rounded">
+                                <div class="h-full bg-primary w-2/3 shadow-[0_0_8px_rgba(233,254,255,0.8)]"></div>
+                            </div>
+                            <span class="font-label-sm text-[10px] text-primary">67%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Footer -->
+        <footer class="w-full py-12 border-t border-outline-variant/20 bg-surface-dim relative">
+            <!-- Scanline noise overlay simulated via CSS bg -->
+            <div class="absolute inset-0 opacity-[0.03] pointer-events-none"
+                style="background-image: repeating-linear-gradient(0deg, #000, #000 1px, transparent 1px, transparent 2px); background-size: 100% 2px;">
+            </div>
+            <div class="max-w-7xl mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+                <div>
+                    <span
+                        class="text-primary font-display-lg text-headline-lg tracking-widest uppercase mb-4 block">LUME
+                        ANALYTICS</span>
+                    <p
+                        class="font-label-sm text-label-sm tracking-widest text-on-surface-variant/60 max-w-sm uppercase">
+                        © 2024 LUME ANALYTICS // TECHNICAL SPECIFICATION V4.0
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-8">
+                    <div class="flex flex-col space-y-3">
+                        <a class="font-label-sm text-label-sm tracking-widest text-on-surface-variant hover:text-primary transition-colors uppercase"
+                            href="#">Documentation</a>
+                        <a class="font-label-sm text-label-sm tracking-widest text-on-surface-variant hover:text-primary transition-colors uppercase"
+                            href="#">API Status</a>
+                    </div>
+                    <div class="flex flex-col space-y-3">
+                        <a class="font-label-sm text-label-sm tracking-widest text-on-surface-variant hover:text-primary transition-colors uppercase"
+                            href="#">System Architecture</a>
+                        <a class="font-label-sm text-label-sm tracking-widest text-on-surface-variant hover:text-primary transition-colors uppercase"
+                            href="#">Security</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bottom Navigation Bar (Mobile Only) -->
+        <nav
+            class="md:hidden fixed bottom-0 w-full z-50 bg-surface-container-lowest/80 backdrop-blur-lg border-t border-primary/20 rounded-t-xl shadow-[0_-4px_24px_rgba(0,0,0,0.5)] flex justify-around items-center h-16 pb-safe">
+            <div
+                class="flex flex-col items-center justify-center text-primary dark:text-surface-tint drop-shadow-[0_0_8px_rgba(0,220,229,0.5)]">
+                <span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+                <span class="font-label-sm text-label-sm mt-1">Strategy</span>
+            </div>
+            <div
+                class="flex flex-col items-center justify-center text-on-surface-variant/50 active:scale-90 transition-all">
+                <span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+                <span class="font-label-sm text-label-sm mt-1">Vis</span>
+            </div>
+            <div
+                class="flex flex-col items-center justify-center text-on-surface-variant/50 active:scale-90 transition-all">
+                <span class="material-symbols-outlined" data-icon="hub">hub</span>
+                <span class="font-label-sm text-label-sm mt-1">Connect</span>
+            </div>
+            <div
+                class="flex flex-col items-center justify-center text-on-surface-variant/50 active:scale-90 transition-all">
+                <span class="material-symbols-outlined" data-icon="devices">devices</span>
+                <span class="font-label-sm text-label-sm mt-1">Mobile</span>
+            </div>
+        </nav>
+    </main>
+    <script>
+        // Micro-interaction for hover glow effects
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+
+        // Simple typing effect for system logs
+        const statusText = document.querySelector('.text-secondary-fixed');
+        if (statusText) {
+            setInterval(() => {
+                statusText.classList.toggle('opacity-50');
+            }, 800);
+        }
+    </script>
+</body>
+
+</html>
