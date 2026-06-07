@@ -169,8 +169,8 @@
         <div class="flex items-center gap-3">
             <span class="material-symbols-outlined text-primary text-3xl" data-icon="query_stats">query_stats</span>
             <span
-                class="font-display-lg text-headline-lg tracking-widest text-primary dark:text-surface-tint uppercase">LUME
-                ANALYTICS</span>
+                class="font-display-lg text-headline-lg tracking-widest text-primary dark:text-surface-tint uppercase">Dashboard
+            </span>
         </div>
         <div class="hidden md:flex items-center space-x-8">
             <a class="font-label-sm text-label-sm uppercase text-primary dark:text-surface-tint font-bold border-b-2 border-primary tracking-widest"
@@ -182,10 +182,16 @@
             <a class="font-label-sm text-label-sm uppercase text-on-surface-variant/70 hover:text-primary transition-colors tracking-widest"
                 href="#">Seguridad</a>
         </div>
-        <button class="active:scale-95 transition-transform text-primary">
-            <span class="material-symbols-outlined text-2xl"
-                data-icon="settings_input_component">settings_input_component</span>
-        </button>
+        <div class="relative" id="lang-selector">
+            <button onclick="document.getElementById('lang-menu').classList.toggle('hidden')" class="flex items-center gap-1.5 px-2.5 py-1.5 text-primary font-label-sm text-label-sm rounded hover:border-primary/50 transition-colors cursor-pointer">
+                <span><span class="material-symbols-outlined text-2xl" data-icon="language">language</span></span><span>ES</span><span class="material-symbols-outlined" style="font-size:14px;line-height:1">expand_more</span>
+            </button>
+            <div id="lang-menu" class="hidden absolute right-0 top-full mt-1 bg-surface-container border border-outline-variant/40 rounded shadow-xl z-[200] overflow-hidden min-w-full">
+                <a href="english.html" class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">🇺🇸 EN</a>
+                <a href="portuguese.html" class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">🇵🇹 PT</a>
+                <a href="spanish.html" class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-primary bg-primary/10">🇪🇸 ES</a>
+            </div>
+        </div>
     </nav>
     <!-- Sidebar (Desktop) -->
     <aside
@@ -480,6 +486,12 @@
         </nav>
     </main>
     <script>
+        document.addEventListener('click', e => {
+            const selector = document.getElementById('lang-selector');
+            if (selector && !selector.contains(e.target))
+                document.getElementById('lang-menu').classList.add('hidden');
+        });
+
         document.querySelectorAll('.glass-card').forEach(card => {
             card.addEventListener('mousemove', e => {
                 const rect = card.getBoundingClientRect();
