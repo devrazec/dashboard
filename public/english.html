@@ -177,6 +177,24 @@
         #mobile-preview-container::-webkit-scrollbar-thumb:hover {
             background: rgba(0, 220, 229, 0.6);
         }
+
+        @media (max-width: 767px) {
+            .mobile-card-width {
+                width: calc(100vw - 32px);
+                max-width: calc(100vw - 32px);
+                min-width: 0;
+            }
+
+            .mobile-card-width .glass-card,
+            .mobile-card-width h1,
+            .mobile-card-width h2,
+            .mobile-card-width h3,
+            .mobile-card-width p {
+                max-width: 100%;
+                min-width: 0;
+                overflow-wrap: anywhere;
+            }
+        }
     </style>
 </head>
 
@@ -185,38 +203,38 @@
     <!-- Top Navigation Bar -->
     <nav
         class="fixed top-0 w-full z-50 bg-surface/70 dark:bg-surface/70 backdrop-blur-xl border-b border-outline-variant/30 shadow-[inset_0_-1px_0_0_rgba(0,220,229,0.1)] h-16 flex justify-between items-center px-5 md:px-margin-desktop">
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 flex-1">
             <span
                 class="font-display-lg text-headline-lg tracking-widest text-primary dark:text-surface-tint uppercase">Dashboard
             </span>
         </div>
-        <div class="hidden md:flex items-center space-x-8">
-            <a data-nav="section-home" class="nav-link font-label-sm text-label-sm uppercase tracking-widest transition-colors text-primary dark:text-surface-tint font-bold border-b-2 border-primary"
+        <div class="hidden md:flex items-center gap-8">
+            <a data-nav="section-home" class="nav-link font-label-sm text-base uppercase tracking-widest transition-colors text-primary dark:text-surface-tint font-bold border-b-2 border-primary"
                 href="#section-home">Home</a>
-            <a class="font-label-sm text-label-sm uppercase tracking-widest transition-colors text-on-surface-variant/70 hover:text-primary"
+            <a class="font-label-sm text-base uppercase tracking-widest transition-colors text-on-surface-variant/70 hover:text-primary"
                 href="https://wa.me/351916095144" target="_blank" rel="noopener">WhatsApp</a>
-            <a class="font-label-sm text-label-sm uppercase tracking-widest transition-colors text-on-surface-variant/70 hover:text-primary"
+            <a class="font-label-sm text-base uppercase tracking-widest transition-colors text-on-surface-variant/70 hover:text-primary"
                 href="http://linkedin.com/in/maxchip" target="_blank" rel="noopener">LinkedIn</a>
-            <a data-nav="section-contacto" class="nav-link font-label-sm text-label-sm uppercase tracking-widest transition-colors text-on-surface-variant/70 hover:text-primary"
+            <a data-nav="section-contacto" class="nav-link font-label-sm text-base uppercase tracking-widest transition-colors text-on-surface-variant/70 hover:text-primary"
                 href="#section-contacto">Contact</a>
         </div>
-        <div class="relative" id="lang-selector">
+        <div class="relative flex-1 flex justify-end" id="lang-selector">
             <button onclick="document.getElementById('lang-menu').classList.toggle('hidden')"
-                class="flex items-center gap-1.5 px-2.5 py-1.5 text-primary font-label-sm text-label-sm rounded hover:border-primary/50 transition-colors cursor-pointer">
-                <span><span class="material-symbols-outlined text-2xl"
-                        data-icon="language">language</span></span><span>EN</span><span
-                    class="material-symbols-outlined" style="font-size:14px;line-height:1">expand_more</span>
+                class="flex items-center gap-2 px-3.5 py-2.5 text-primary font-label-sm text-base rounded hover:border-primary/50 transition-colors cursor-pointer">
+                <span><span class="material-symbols-outlined text-3xl"
+                        data-icon="language">language</span></span><span class="leading-none">EN</span><span
+                    class="material-symbols-outlined text-xl leading-none">expand_more</span>
             </button>
             <div id="lang-menu"
-                class="hidden fixed right-[40px] top-16 mt-1 bg-surface-container border border-outline-variant/40 rounded shadow-xl z-[200] overflow-hidden min-w-[80px]">
+                class="hidden fixed right-5 md:right-[40px] top-16 mt-1 bg-surface-container border border-outline-variant/40 rounded shadow-xl z-[200] overflow-hidden min-w-[104px]">
                 <a href="/pages/English" target="_parent"
-                    class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-primary bg-primary/10">🇺🇸
+                    class="flex items-center gap-2 px-4 py-3 font-label-sm text-base text-primary bg-primary/10">🇺🇸
                     EN</a>
                 <a href="/pages/Portuguese" target="_parent"
-                    class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">🇵🇹
+                    class="flex items-center gap-2 px-4 py-3 font-label-sm text-base text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">🇵🇹
                     PT</a>
                 <a href="/pages/Spanish" target="_parent"
-                    class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">🇪🇸
+                    class="flex items-center gap-2 px-4 py-3 font-label-sm text-base text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">🇪🇸
                     ES</a>
             </div>
         </div>
@@ -227,15 +245,15 @@
         <div class="absolute inset-0 cyber-grid opacity-20 pointer-events-none"></div>
         <div class="scanline"></div>
         <!-- Services Bento Grid -->
-        <section class="px-margin-mobile md:px-margin-desktop py-16">
+        <section class="px-margin-mobile md:px-margin-desktop pt-gutter pb-gutter">
             <div class="max-w-7xl mx-auto">
-                <div class="flex flex-col md:flex-row gap-gutter items-start">
+                <div class="mobile-card-width md:w-full md:max-w-none flex flex-col md:flex-row gap-gutter items-stretch">
                     <!-- Left column: all cards -->
-                    <div class="flex-1 flex flex-col gap-gutter">
+                    <div class="mobile-card-width md:w-auto md:max-w-none md:flex-1 flex flex-col gap-gutter">
                         <!-- Feature Card 1: BI Strategy -->
                         <div id="section-home"
                             class="group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col md:flex-row gap-8">
-                            <div class="flex-1 flex flex-col justify-center">
+                            <div class="flex-1 flex flex-col justify-center items-center md:items-start text-center md:text-left">
                                 <h1
                                     class="font-display-lg text-display-lg text-primary tracking-tighter max-w-3xl leading-none">
                                     Data that <span class="text-surface-tint neon-text-glow">reveals</span> what
@@ -256,7 +274,7 @@
                         <!-- Feature Card 4: Mobile Integration -->
                         <div
                             class="group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col md:flex-row gap-8">
-                            <div class="flex-1 flex flex-col justify-center">
+                            <div class="flex-1 flex flex-col justify-center items-center md:items-start text-center md:text-left">
                                 <h1
                                     class="font-display-lg text-display-lg text-primary tracking-tighter max-w-3xl leading-none">
                                     Everything you need <span class="text-surface-tint neon-text-glow">built</span>
@@ -279,11 +297,11 @@
                             class="group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col md:flex-row gap-8">
                             <div class="flex-1">
                                 <h1
-                                    class="font-display-lg text-display-lg text-primary tracking-tighter leading-none mb-4">
+                                    class="font-display-lg text-headline-lg-mobile md:text-display-lg text-primary tracking-tighter leading-none mb-4 text-center md:text-left">
                                     A <span class="text-surface-tint neon-text-glow">clear,</span> agile and
                                     collaborative process
                                 </h1>
-                                <p class="font-body-md text-on-surface-variant text-lg leading-relaxed mb-8">
+                                <p class="font-body-md text-on-surface-variant text-lg leading-relaxed mb-8 text-center md:text-left">
                                     That ensures the final product exceeds expectations.
                                 </p>
                                 <div class="space-y-6">
@@ -344,7 +362,7 @@
                         </div>
                     </div>
                     <!-- Right column: iframe + Card 3 -->
-                    <div id="section-dashboard" class="w-full md:w-96 shrink-0 flex flex-col gap-gutter">
+                    <div id="section-dashboard" class="mobile-card-width md:w-96 md:max-w-none shrink-0 flex flex-col gap-gutter self-stretch">
                         <div class="group relative overflow-x-hidden rounded-xl glass-card flex flex-col">
                             <div id="mobile-preview-container-1" class="overflow-x-hidden">
                                 <div id="mobile-scale-wrapper-1">
@@ -357,19 +375,21 @@
                             </div>
                         </div>
                         <!-- Feature Card 3: APIs -->
-                        <div class="group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col">
+                        <div class="group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col items-center md:items-start text-center md:text-left md:flex-1">
                             <span class="material-symbols-outlined text-surface-tint text-5xl mb-6"
                                 data-icon="api">api</span>
                             <h3 class="font-headline-lg text-headline-lg text-primary mb-4">Universal APIs</h3>
                             <p class="font-body-md text-on-surface-variant">Standardised connection protocols for
                                 seamless data ingestion and export across platforms.</p>
-                            <div class="mt-8 space-y-2">
+                            <div class="mt-8 w-full space-y-3">
                                 <div class="h-2 w-full bg-outline-variant/10 rounded-full overflow-hidden">
                                     <div class="h-full bg-surface-tint w-3/4"></div>
                                 </div>
-                                <div class="flex justify-between font-label-sm text-[10px] text-on-surface-variant/60">
-                                    <span>LATENCY: 12ms</span>
-                                    <span>CAPACITY: 98%</span>
+                                <div class="grid grid-cols-2 gap-2 font-label-sm text-xs md:text-[10px] text-on-surface-variant/70">
+                                    <span class="rounded border border-outline-variant/20 bg-primary/5 px-2 py-1 text-center">Restful</span>
+                                    <span class="rounded border border-outline-variant/20 bg-primary/5 px-2 py-1 text-center">Socket OI</span>
+                                    <span class="rounded border border-outline-variant/20 bg-primary/5 px-2 py-1 text-center">GraphQL</span>
+                                    <span class="rounded border border-outline-variant/20 bg-primary/5 px-2 py-1 text-center">Web RTC</span>
                                 </div>
                             </div>
                         </div>
@@ -378,7 +398,7 @@
             </div>
         </section>
         <!-- Footer -->
-        <footer id="section-contacto" class="w-full py-12 border-t border-outline-variant/20 bg-surface-dim relative">
+        <footer id="section-contacto" class="w-full pt-gutter pb-12 border-t border-outline-variant/20 bg-surface-dim relative">
             <!-- Scanline noise overlay simulated via CSS bg -->
             <div class="absolute inset-0 opacity-[0.03] pointer-events-none"
                 style="background-image: repeating-linear-gradient(0deg, #000, #000 1px, transparent 1px, transparent 2px); background-size: 100% 2px;">
@@ -481,6 +501,9 @@
             const sections = ['section-home', 'section-dashboard', 'section-dados', 'section-contacto'];
 
             function setActive(id) {
+                const hasNavItem = document.querySelector(`.nav-link[data-nav="${id}"], .mob-nav-link[data-nav="${id}"]`);
+                if (!hasNavItem) return;
+
                 document.querySelectorAll('.nav-link').forEach(a => {
                     const isActive = a.dataset.nav === id;
                     a.classList.toggle('text-primary', isActive);
@@ -498,6 +521,8 @@
                     a.classList.toggle('text-on-surface-variant/50', !isActive);
                 });
             }
+
+            setActive(window.location.hash?.slice(1) || 'section-home');
 
             const observer = new IntersectionObserver(entries => {
                 entries.forEach(entry => {
