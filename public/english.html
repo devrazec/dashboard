@@ -589,7 +589,7 @@
             mounts.forEach(mount => {
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
-                camera.position.set(0, 0.08, 6.8);
+                camera.position.set(0, 0.08, 5.65);
 
                 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -597,6 +597,7 @@
                 mount.appendChild(renderer.domElement);
 
                 const group = new THREE.Group();
+                group.position.y = 0.22;
                 scene.add(group);
 
                 scene.add(new THREE.AmbientLight(0xffffff, 1.25));
@@ -606,7 +607,7 @@
 
                 const loader = new THREE.TextureLoader();
                 const phoneAspect = 390 / 844;
-                const featuredGeometry = new THREE.PlaneGeometry(1.38, 1.38 / phoneAspect);
+                const featuredGeometry = new THREE.PlaneGeometry(1.72, 1.72 / phoneAspect);
                 loader.load('/assets/img/dashboard/11.jpg', texture => {
                     texture.colorSpace = THREE.SRGBColorSpace;
                     texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
@@ -632,10 +633,10 @@
                             side: THREE.DoubleSide,
                             transparent: true
                         });
-                        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.72, 0.72 / phoneAspect), material);
+                        const mesh = new THREE.Mesh(new THREE.PlaneGeometry(0.92, 0.92 / phoneAspect), material);
                         const angle = (index / visibleImages.length) * Math.PI * 2;
                         mesh.position.set(Math.sin(angle) * radius, Math.cos(angle * 0.5) * 0.16, Math.cos(angle) * radius - 0.55);
-                        mesh.rotation.y = angle + Math.PI;
+                        mesh.rotation.y = angle;
                         mesh.userData.angle = angle;
                         group.add(mesh);
                     });
