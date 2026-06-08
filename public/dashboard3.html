@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EcoSync - Structural Flux Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Google Fonts: Space Grotesk -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;family=Geist:wght@400;500;700&amp;family=Jetbrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet" />
+    <script>tailwind.config = { theme: { extend: { colors: { "cyber-accent": "#00e5ff", "cyber-surface": "#111318", "cyber-dim": "#1a1c20", "cyber-border": "rgba(0, 229, 255, 0.2)", "surface-bright": "#002e51", "tertiary-fixed-dim": "#a595ff", "on-secondary": "#002746", "on-error": "#490006", "on-background": "#d6e7ff", "surface-container": "#001b33", "on-surface": "#d6e7ff", "surface-container-high": "#00213c", "inverse-surface": "#f8f9ff", tertiary: "#b0a2ff", secondary: "#4ea8fe", "on-secondary-container": "#f5f8ff", "primary-fixed": "#04afff", "on-tertiary-fixed-variant": "#3a248f", "on-primary": "#003653", background: "#000f20", "surface-container-low": "#001428", "on-tertiary-container": "#220076", "secondary-fixed-dim": "#98c7ff", outline: "#5b789a", "surface-dim": "#000f20", "on-tertiary": "#2e1484", error: "#ff716c", "on-primary-container": "#002a42", "tertiary-fixed": "#b3a5ff", "inverse-primary": "#006595", "on-primary-fixed-variant": "#003450", "surface-container-highest": "#002746", "secondary-fixed": "#b3d4ff", "primary-fixed-dim": "#00a1eb", "surface-tint": "#59bcff", "primary-container": "#04afff", "surface-variant": "#002746", "tertiary-container": "#a391ff", "on-secondary-fixed": "#00365e", surface: "#000f20", "error-container": "#9f0519", "secondary-container": "#0061a3", "on-secondary-fixed-variant": "#00538d", "on-tertiary-fixed": "#170059", "outline-variant": "#2d4a69", "on-surface-variant": "#91add2", "on-error-container": "#ffa8a3", "on-primary-fixed": "#00070f", "inverse-on-surface": "#3a5777", "surface-container-lowest": "#000000", primary: "#59bcff", "error-dim": "#d7383b", "primary-dim": "#00a7f3", "secondary-dim": "#47a2f8", "tertiary-dim": "#a08ffc" }, fontFamily: { sans: ["Space Grotesk", "sans-serif"], headline: ["Space Grotesk"], display: ["Space Grotesk"], body: ["Geist"], label: ["Jetbrains Mono"] }, fontSize: {}, borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" } } } };</script>
+    <style data-purpose="global-styles">
+        body {
+            background-color: #0c0e12;
+            color: #e0faff;
+            overflow-x: hidden;
+        }
+
+        /* Blueprint grid background */
+        .blueprint-bg {
+            background-image:
+                linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Glowing effects */
+        .glow-border {
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
+        }
+
+        .active-node {
+            filter: drop-shadow(0 0 8px #00e5ff);
+        }
+
+        /* Scanning line animation */
+        @keyframes scan {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+        }
+
+        .scanner-line {
+            animation: scan 4s linear infinite;
+            background: linear-gradient(to bottom, transparent, #00e5ff, transparent);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="font-sans blueprint-bg min-h-screen">
+    <!-- BEGIN: MainHeader -->
+    <header
+        class="relative z-10 flex items-center justify-between p-4 border-b border-cyber-border bg-cyber-surface/80 backdrop-blur-md">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-cyber-accent flex items-center justify-center rounded-sm rotate-45">
+                <div class="w-4 h-4 border-2 border-cyber-surface"></div>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold tracking-widest uppercase text-cyber-accent">EcoSync</h1>
+                <p class="text-[10px] opacity-60 tracking-tighter">STRUCTURAL FLUX ENGINE v4.2</p>
+            </div>
+        </div>
+        <div class="text-right">
+            <div class="text-xs font-mono opacity-80">SYSTEM STATUS: <span class="text-cyber-accent">OPTIMAL</span>
+            </div>
+            <div class="text-sm font-bold tracking-widest" id="clock">00:00:00</div>
+        </div>
+    </header>
+    <!-- END: MainHeader -->
+    <!-- BEGIN: MainContent -->
+    <main class="p-4 grid grid-cols-1 gap-6 pb-24">
+        <!-- Top Row: Environmental Sensors -->
+        <section class="grid grid-cols-3 gap-3" data-purpose="atmospheric-sensors">
+            <!-- Temp Dial -->
+            <div
+                class="bg-cyber-dim border border-cyber-border p-3 rounded-sm flex flex-col items-center justify-center aspect-square">
+                <span class="text-[10px] opacity-50 uppercase mb-2">TEMP</span>
+                <div class="relative w-16 h-16 flex items-center justify-center">
+                    <svg class="w-full h-full -rotate-90">
+                        <circle cx="32" cy="32" fill="transparent" r="28" stroke="rgba(0,229,255,0.1)" stroke-width="4">
+                        </circle>
+                        <circle cx="32" cy="32" fill="transparent" r="28" stroke="#00e5ff" stroke-dasharray="176"
+                            stroke-dashoffset="40" stroke-width="4" id="temp-circle"></circle>
+                    </svg>
+                    <span class="absolute text-sm font-bold" id="temp-label">24°</span>
+                </div>
+            </div>
+            <!-- Humidity Dial -->
+            <div
+                class="bg-cyber-dim border border-cyber-border p-3 rounded-sm flex flex-col items-center justify-center aspect-square">
+                <span class="text-[10px] opacity-50 uppercase mb-2">HUMD</span>
+                <div class="relative w-16 h-16 flex items-center justify-center">
+                    <svg class="w-full h-full -rotate-90">
+                        <circle cx="32" cy="32" fill="transparent" r="28" stroke="rgba(0,229,255,0.1)" stroke-width="4">
+                        </circle>
+                        <circle cx="32" cy="32" fill="transparent" r="28" stroke="#00e5ff" stroke-dasharray="176"
+                            stroke-dashoffset="80" stroke-width="4" id="humd-circle"></circle>
+                    </svg>
+                    <span class="absolute text-sm font-bold" id="humd-label">42%</span>
+                </div>
+            </div>
+            <!-- Air Quality Dial -->
+            <div
+                class="bg-cyber-dim border border-cyber-border p-3 rounded-sm flex flex-col items-center justify-center aspect-square">
+                <span class="text-[10px] opacity-50 uppercase mb-2">AQI</span>
+                <div class="relative w-16 h-16 flex items-center justify-center">
+                    <svg class="w-full h-full -rotate-90">
+                        <circle cx="32" cy="32" fill="transparent" r="28" stroke="rgba(0,229,255,0.1)" stroke-width="4">
+                        </circle>
+                        <circle cx="32" cy="32" fill="transparent" r="28" stroke="#00e5ff" stroke-dasharray="176"
+                            stroke-dashoffset="20" stroke-width="4" id="aqi-circle"></circle>
+                    </svg>
+                    <span class="absolute text-sm font-bold" id="aqi-label">012</span>
+                </div>
+            </div>
+        </section>
+        <!-- Center Section: 3D Wireframe Display -->
+        <section
+            class="relative bg-cyber-dim/50 border border-cyber-border aspect-[4/5] rounded-sm overflow-hidden flex flex-col"
+            data-purpose="architectural-wireframe">
+            <!-- UI Decor Elements -->
+            <div class="absolute top-0 left-0 p-2 opacity-30 text-[8px] font-mono">
+                COORD: 34.0522° N, 118.2437° W<br />
+                STRUCT_ID: NEXUS-01
+            </div>
+            <!-- The Scanning Line Effect -->
+            <div class="absolute inset-0 scanner-line w-full h-[2px] z-10 opacity-30"></div>
+            <!-- Central Wireframe Visualization (Simulated via SVG) -->
+            <div class="flex-grow flex items-center justify-center p-8 relative">
+                <!-- Background 3D Image Placeholder using requested structural feel -->
+                <img alt="Architectural Wireframe" class="w-full h-auto opacity-80 mix-blend-screen active-node"
+                    src="/assets/img/img-07.jpg" />
+                <!-- Glowing Appliance Nodes (Positioned absolutely over the wireframe) -->
+                <div class="absolute top-[30%] left-[45%] w-3 h-3 bg-cyber-accent rounded-full animate-pulse glow-border"
+                    title="HVAC Control"></div>
+                <div class="absolute top-[55%] left-[25%] w-2 h-2 bg-cyber-accent rounded-full animate-ping"
+                    title="Kitchen Node"></div>
+                <div class="absolute top-[65%] right-[30%] w-3 h-3 bg-cyber-accent rounded-full animate-pulse glow-border"
+                    title="Smart Lighting Hub"></div>
+            </div>
+            <!-- Bottom Overlay Metrics -->
+            <div class="p-4 grid grid-cols-2 gap-4 border-t border-cyber-border bg-cyber-surface/90">
+                <div class="flex flex-col">
+                    <span class="text-[10px] opacity-50 mb-1">TOTAL NODE POWER</span>
+                    <span class="text-xl font-bold font-mono" id="node-power">1.84 <span
+                            class="text-xs text-cyber-accent font-normal tracking-normal">kW</span></span>
+                </div>
+                <div class="flex flex-col text-right">
+                    <span class="text-[10px] opacity-50 mb-1">EFFICIENCY INDEX</span>
+                    <span class="text-xl font-bold font-mono text-cyber-accent" id="efficiency">98.2%</span>
+                </div>
+            </div>
+        </section>
+        <!-- Bottom Row: Core COP Metrics -->
+        <section class="grid grid-cols-2 gap-4" data-purpose="core-metrics">
+            <div class="bg-cyber-surface border-l-2 border-cyber-accent p-4 rounded-r-sm">
+                <p class="text-[9px] uppercase tracking-widest opacity-60 mb-1">Core COP Ratio</p>
+                <div class="flex items-end gap-2">
+                    <span class="text-2xl font-bold" id="cop-value">5.68</span>
+                    <span class="text-[10px] text-cyber-accent mb-1">L1 SCALE</span>
+                </div>
+                <div class="mt-2 w-full bg-cyber-border h-1">
+                    <div class="bg-cyber-accent h-full shadow-[0_0_5px_#00e5ff]" id="cop-bar" style="width:85%"></div>
+                </div>
+            </div>
+            <div class="bg-cyber-surface border-l-2 border-cyber-accent p-4 rounded-r-sm">
+                <p class="text-[9px] uppercase tracking-widest opacity-60 mb-1">Load Demand</p>
+                <div class="flex items-end gap-2">
+                    <span class="text-2xl font-bold" id="load-value">34%</span>
+                    <span class="text-[10px] text-cyber-accent mb-1" id="load-status">LOW</span>
+                </div>
+                <div class="mt-2 w-full bg-cyber-border h-1">
+                    <div class="bg-cyber-accent h-full shadow-[0_0_5px_#00e5ff]" id="load-bar" style="width:34%"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- END: MainContent -->
+    <!-- BEGIN: NavigationFooter -->
+    <footer
+        class="fixed bottom-0 left-0 right-0 p-4 bg-cyber-surface border-t border-cyber-border flex justify-between items-center z-50">
+        <button class="p-2 text-cyber-accent">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+        </button>
+        <button class="p-2 opacity-40">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+        </button>
+        <button
+            class="w-12 h-12 bg-cyber-accent/20 border border-cyber-accent flex items-center justify-center rounded-full -mt-10 glow-border">
+            <div class="w-6 h-6 bg-cyber-accent rounded-full animate-pulse"></div>
+        </button>
+        <button class="p-2 opacity-40">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m10 4a2 2 0 100-4m0 4a2 2 0 110-4M6 20v-2m0 0V12m0 6h12v-6m0 6v2"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            </svg>
+        </button>
+        <button class="p-2 opacity-40">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2"></path>
+            </svg>
+        </button>
+    </footer>
+    <!-- END: NavigationFooter -->
+    <script>
+        const rand = (min, max, dec = 0) => +(Math.random() * (max - min) + min).toFixed(dec);
+        // circumference = 176 (r=28), offset = 176 * (1 - pct/100)
+        const setDial = (circleId, labelId, value, suffix) => {
+            const pct = Math.min(Math.max(value, 0), 100);
+            document.getElementById(circleId).setAttribute('stroke-dashoffset', (176 * (1 - pct / 100)).toFixed(1));
+            document.getElementById(labelId).textContent = value + suffix;
+        };
+
+        function updateDashboard() {
+            // Sensor dials
+            const temp = rand(18, 34);
+            setDial('temp-circle', 'temp-label', temp, '°');
+
+            const humd = rand(20, 85);
+            setDial('humd-circle', 'humd-label', humd, '%');
+
+            const aqi = rand(5, 80);
+            setDial('aqi-circle', 'aqi-label', String(aqi).padStart(3, '0'), '');
+
+            // Wireframe metrics
+            document.getElementById('node-power').innerHTML =
+                rand(0.8, 3.5, 2) + ' <span class="text-xs text-cyber-accent font-normal tracking-normal">kW</span>';
+            document.getElementById('efficiency').textContent = rand(88, 99, 1) + '%';
+
+            // COP ratio
+            const cop = rand(3.5, 7.5, 2);
+            const copPct = Math.round(((cop - 3.5) / 4) * 100);
+            document.getElementById('cop-value').textContent = cop;
+            document.getElementById('cop-bar').style.width = copPct + '%';
+
+            // Load demand
+            const load = rand(10, 95);
+            const loadStatus = load < 35 ? 'LOW' : load < 65 ? 'MED' : 'HIGH';
+            const loadColor = load < 35 ? 'text-green-400' : load < 65 ? 'text-yellow-400' : 'text-red-400';
+            document.getElementById('load-value').textContent = load + '%';
+            const ls = document.getElementById('load-status');
+            ls.textContent = loadStatus;
+            ls.className = 'text-[10px] mb-1 ' + loadColor;
+            document.getElementById('load-bar').style.width = load + '%';
+        }
+
+        setInterval(updateDashboard, 3000);
+    </script>
+    <script data-purpose="clock-logic">
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+
+</html>

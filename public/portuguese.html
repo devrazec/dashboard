@@ -160,6 +160,23 @@
         body {
             min-height: max(884px, 100dvh);
         }
+
+        #mobile-preview-container::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #mobile-preview-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #mobile-preview-container::-webkit-scrollbar-thumb {
+            background: rgba(0, 220, 229, 0.3);
+            border-radius: 2px;
+        }
+
+        #mobile-preview-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 220, 229, 0.6);
+        }
     </style>
 </head>
 
@@ -185,13 +202,23 @@
                 href="#">Segurança</a>
         </div>
         <div class="relative" id="lang-selector">
-            <button onclick="document.getElementById('lang-menu').classList.toggle('hidden')" class="flex items-center gap-1.5 px-2.5 py-1.5 text-primary font-label-sm text-label-sm rounded hover:border-primary/50 transition-colors cursor-pointer">
-                <span><span class="material-symbols-outlined text-2xl" data-icon="language">language</span></span><span>PT</span><span class="material-symbols-outlined" style="font-size:14px;line-height:1">expand_more</span>
+            <button onclick="document.getElementById('lang-menu').classList.toggle('hidden')"
+                class="flex items-center gap-1.5 px-2.5 py-1.5 text-primary font-label-sm text-label-sm rounded hover:border-primary/50 transition-colors cursor-pointer">
+                <span><span class="material-symbols-outlined text-2xl"
+                        data-icon="language">language</span></span><span>PT</span><span
+                    class="material-symbols-outlined" style="font-size:14px;line-height:1">expand_more</span>
             </button>
-            <div id="lang-menu" class="hidden fixed right-[40px] top-16 mt-1 bg-surface-container border border-outline-variant/40 rounded shadow-xl z-[200] overflow-hidden min-w-[80px]">
-                <a href="/pages/English" target="_parent" class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">🇺🇸 EN</a>
-                <a href="/pages/Portuguese" target="_parent" class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-primary bg-primary/10">🇵🇹 PT</a>
-                <a href="/pages/Spanish" target="_parent" class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">🇪🇸 ES</a>
+            <div id="lang-menu"
+                class="hidden fixed right-[40px] top-16 mt-1 bg-surface-container border border-outline-variant/40 rounded shadow-xl z-[200] overflow-hidden min-w-[80px]">
+                <a href="/pages/English" target="_parent"
+                    class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">🇺🇸
+                    EN</a>
+                <a href="/pages/Portuguese" target="_parent"
+                    class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-primary bg-primary/10">🇵🇹
+                    PT</a>
+                <a href="/pages/Spanish" target="_parent"
+                    class="flex items-center gap-2 px-3 py-2 font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-high hover:text-primary transition-colors">🇪🇸
+                    ES</a>
             </div>
         </div>
     </nav>
@@ -239,28 +266,6 @@
         <!-- Background Decorative Elements -->
         <div class="absolute inset-0 cyber-grid opacity-20 pointer-events-none"></div>
         <div class="scanline"></div>
-        <!-- Hero Section -->
-        <section
-            class="relative px-margin-mobile md:px-margin-desktop py-12 md:py-24 border-b border-outline-variant/10">
-            <div class="max-w-5xl mx-auto">
-                <div class="flex flex-col gap-4">
-                    <div class="flex items-center gap-4">
-                        <span
-                            class="font-label-sm text-label-sm uppercase text-primary border border-primary/30 px-3 py-1 rounded-full bg-primary/5">ESPECIFICAÇÃO
-                            TÉCNICA V4.0</span>
-                        <div class="h-px flex-1 bg-gradient-to-right from-primary/30 to-transparent"></div>
-                    </div>
-                    <h1 class="font-display-lg text-display-lg text-primary tracking-tighter max-w-3xl leading-none">
-                        ENGENHARIA DE <span class="text-surface-tint neon-text-glow">SUPREMACIA DE DADOS</span> ATRAVÉS
-                        DE PRECISÃO ANALÍTICA.
-                    </h1>
-                    <p class="font-body-md text-on-surface-variant max-w-xl text-lg leading-relaxed">
-                        Implementando pipelines de business intelligence de próxima geração e sistemas de visualização
-                        de alta fidelidade para o ecossistema deep-tech.
-                    </p>
-                </div>
-            </div>
-        </section>
         <!-- Services Bento Grid -->
         <section class="px-margin-mobile md:px-margin-desktop py-16">
             <div class="max-w-7xl mx-auto">
@@ -271,69 +276,52 @@
                         <div class="absolute top-0 right-0 p-4 font-label-sm text-on-surface-variant/20">01 // STRAT
                         </div>
                         <div class="z-10">
-                            <span class="material-symbols-outlined text-surface-tint text-5xl mb-6"
-                                data-icon="architecture">architecture</span>
-                            <h3 class="font-headline-lg text-headline-lg text-primary mb-4">Estratégia de BI
-                                Arquitetural</h3>
-                            <p class="font-body-md text-on-surface-variant max-w-md">Desenvolvimento de roadmap
-                                abrangente para maturação de dados em escala empresarial. Projetamos a estrutura central
-                                do seu futuro analítico.</p>
-                        </div>
-                        <div class="z-10 mt-12 flex flex-wrap gap-3">
-                            <span
-                                class="font-label-sm text-[10px] uppercase px-3 py-1 border border-outline-variant/40 text-on-surface-variant">ROADMAPPING</span>
-                            <span
-                                class="font-label-sm text-[10px] uppercase px-3 py-1 border border-outline-variant/40 text-on-surface-variant">GOVERNANÇA</span>
-                            <span
-                                class="font-label-sm text-[10px] uppercase px-3 py-1 border border-outline-variant/40 text-on-surface-variant">ESCALABILIDADE</span>
+                            <h1
+                                class="font-display-lg text-display-lg text-primary tracking-tighter max-w-3xl leading-none">
+                                Dados que <span class="text-surface-tint neon-text-glow">revelam</span> o
+                                que importa
+                            </h1>
+                            <p class="font-body-md text-on-surface-variant max-w-xl text-lg leading-relaxed">
+                                Desenvolvemos dashboards personalizados e sistemas de KPIs para empresas que querem
+                                tomar decisões com clareza e velocidade.
+                            </p>
                         </div>
                         <!-- Abstract Image -->
                         <div
                             class="absolute bottom-0 right-0 w-1/2 h-full opacity-30 pointer-events-none group-hover:opacity-50 transition-opacity">
                             <img alt="Technical schematic" class="w-full h-full object-cover"
                                 data-alt="A macro close-up of a futuristic high-tech motherboard with glowing cyan circuitry traces and pulses of light. The image features a dark, navy blue base with sharp, precision-engineered geometric patterns. Deep tech atmosphere, cold technical lighting, high contrast, cybernetic and analytical aesthetic."
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuANoGscFKw3xwrkFVOaCP2E3VCsjmM7bZ33Rd2rb89dyUVT2L3bzCeLAkrOrUd_pBYVK0Bm_n071P3SQmOM9neIjjz4H8Y3_npIV9TowXGXWz1RJfpXKW4SwyfdJAA6jXudiOPn8F7seBt9egr4Y2n8_3Upf5jp7j1N2VoNmcxkvFBVmpzl1tl3lEiWVLSeF3ih36RH40wikIw8rxr97rA3sfS_VAho29eV9OeU76R8tTTAFX_Ev5PVUos8U_KO5ap0kwEExWu9m8oe" />
+                                src="/assets/img/img-02.png" />
                         </div>
                     </div>
                     <!-- Feature Card 2: Vis -->
-                    <div class="md:col-span-4 group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col">
-                        <div class="absolute top-0 right-0 p-4 font-label-sm text-on-surface-variant/20">02 // OPTIC
-                        </div>
-                        <span class="material-symbols-outlined text-surface-tint text-5xl mb-6"
-                            data-icon="monitoring">monitoring</span>
-                        <h3 class="font-headline-lg text-headline-lg text-primary mb-4">Visualização em Tempo Real</h3>
-                        <p class="font-body-md text-on-surface-variant">Motores de renderização de alta frequência para
-                            fluxos de dados em tempo real e análise temporal complexa.</p>
-                        <div class="mt-auto pt-8">
-                            <div
-                                class="w-full h-32 border border-outline-variant/20 rounded bg-surface-container-lowest/50 relative overflow-hidden">
-                                <!-- Simulated Chart -->
-                                <div class="absolute bottom-0 left-0 w-full flex items-end h-full px-2 gap-1">
-                                    <div class="bg-primary/20 w-full h-1/2 group-hover:h-2/3 transition-all"></div>
-                                    <div class="bg-primary/20 w-full h-3/4 group-hover:h-1/2 transition-all"></div>
-                                    <div class="bg-primary/20 w-full h-1/4 group-hover:h-3/4 transition-all"></div>
-                                    <div class="bg-primary/40 w-full h-2/3 group-hover:h-full transition-all"></div>
-                                    <div class="bg-primary/20 w-full h-1/2 group-hover:h-1/4 transition-all"></div>
-                                </div>
+                    <div
+                        class="md:col-span-4 group relative overflow-hidden rounded-xl glass-card flex flex-col h-[1024px]">
+                        <div id="mobile-preview-container-1" class="flex-1 overflow-y-auto overflow-x-hidden">
+                            <div id="mobile-scale-wrapper-1">
+                                <iframe src="dashboard1.html"
+                                    style="width: 375px; height: 1024px; border: none; display: block;" loading="lazy"
+                                    onload="try{this.contentDocument.documentElement.style.overflowX='hidden'}catch(e){}">
+                                </iframe>
                             </div>
                         </div>
                     </div>
                     <!-- Feature Card 3: APIs -->
                     <div class="md:col-span-4 group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col">
-                        <div class="absolute top-0 right-0 p-4 font-label-sm text-on-surface-variant/20">03 // CONN
+                        <div class="absolute top-0 right-0 p-4 font-label-sm text-on-surface-variant/20">03 // CONEX
                         </div>
                         <span class="material-symbols-outlined text-surface-tint text-5xl mb-6"
                             data-icon="api">api</span>
-                        <h3 class="font-headline-lg text-headline-lg text-primary mb-4">APIs Universais</h3>
-                        <p class="font-body-md text-on-surface-variant">Protocolos de conexão padronizados para ingestão
-                            e exportação de dados multiplataforma sem interrupções.</p>
+                        <h3 class="font-headline-lg text-headline-lg text-primary mb-4">APIs Universales</h3>
+                        <p class="font-body-md text-on-surface-variant">Protocolos de conexión estandarizados para una
+                            ingesta y exportación de datos fluida entre plataformas.</p>
                         <div class="mt-8 space-y-2">
                             <div class="h-2 w-full bg-outline-variant/10 rounded-full overflow-hidden">
                                 <div class="h-full bg-surface-tint w-3/4"></div>
                             </div>
                             <div class="flex justify-between font-label-sm text-[10px] text-on-surface-variant/60">
-                                <span>LATÊNCIA: 12ms</span>
-                                <span>CAPACIDADE: 98%</span>
+                                <span>LATENCIA: 12ms</span>
+                                <span>RENDIMIENTO: 98%</span>
                             </div>
                         </div>
                     </div>
@@ -341,12 +329,15 @@
                     <div
                         class="md:col-span-8 group relative overflow-hidden rounded-xl glass-card p-8 flex flex-col md:flex-row gap-8">
                         <div class="flex-1 flex flex-col justify-center">
-                            <div class="font-label-sm text-on-surface-variant/20 mb-2">04 // MOB</div>
-                            <span class="material-symbols-outlined text-surface-tint text-5xl mb-6"
-                                data-icon="phone_iphone">phone_iphone</span>
-                            <h3 class="font-headline-lg text-headline-lg text-primary mb-4">Analytics na Borda</h3>
-                            <p class="font-body-md text-on-surface-variant">Entregue insights críticos diretamente em
-                                endpoints móveis com aceleração de hardware otimizada e cache de latência zero.</p>
+                            <h1
+                                class="font-display-lg text-display-lg text-primary tracking-tighter max-w-3xl leading-none">
+                                Tudo o que precisa <span class="text-surface-tint neon-text-glow">construído</span>
+                                para si
+                            </h1>
+                            <p class="font-body-md text-on-surface-variant max-w-xl text-lg leading-relaxed">
+                                Desde a análise de dados até ao painel de controlo em produção, desenvolvemos soluções
+                                completas adaptadas ao seu negócio.
+                            </p>
                         </div>
                         <div
                             class="flex-1 bg-surface-container-lowest/50 rounded-lg border border-outline-variant/10 overflow-hidden relative">
@@ -364,8 +355,15 @@
             class="px-margin-mobile md:px-margin-desktop py-24 bg-surface-container-lowest/50 border-y border-outline-variant/10">
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div>
-                    <h2 class="font-display-lg text-headline-lg text-primary uppercase tracking-tighter mb-8">
-                        INTELIGÊNCIA ACELERADA <br /><span class="text-surface-tint">POR HARDWARE</span></h2>
+                    <h1 class="font-display-lg text-display-lg text-primary tracking-tighter max-w-3xl leading-none">
+                        Um processo <span class="text-surface-tint neon-text-glow"> claro, </span>
+                        ágil e colaborativo
+                    </h1>
+                    <p class="font-body-md text-on-surface-variant max-w-xl text-lg leading-relaxed mb-8">
+                        Que garante que o produto
+                        final supere as expectativas.
+                    </p>
+
                     <div class="space-y-6">
                         <div class="flex items-start gap-4">
                             <div
@@ -373,10 +371,11 @@
                                 <span class="material-symbols-outlined text-primary" data-icon="bolt">bolt</span>
                             </div>
                             <div>
-                                <h4 class="font-label-sm text-label-sm uppercase text-primary mb-1">PROCESSAMENTO
-                                    SUB-100MS</h4>
-                                <p class="text-sm text-on-surface-variant">Motores proprietários otimizados para
-                                    ingestão de alto volume e resposta instantânea a consultas.</p>
+                                <h4 class="font-label-sm text-label-sm uppercase text-primary mb-1">Dashboard Executivo
+                                </h4>
+                                <p class="text-sm text-on-surface-variant">Painéis de alto nível para líderes de
+                                    negócio. KPIs estratégicos, alertas automáticos e relatórios agendados para tomadas
+                                    de decisão rápidas.</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -386,10 +385,11 @@
                                     data-icon="security">security</span>
                             </div>
                             <div>
-                                <h4 class="font-label-sm text-label-sm uppercase text-primary mb-1">PIPELINES
-                                    CRIPTOGRAFADOS</h4>
-                                <p class="text-sm text-on-surface-variant">Criptografia TLS 1.3 de ponta a ponta com
-                                    armazenamento de chaves baseado em hardware e protocolos zero-trust.</p>
+                                <h4 class="font-label-sm text-label-sm uppercase text-primary mb-1">Analytics Avançado
+                                </h4>
+                                <p class="text-sm text-on-surface-variant">Modelos preditivos, análise de tendências e
+                                    visualizações interativas que transformam dados brutos em insights acionáveis para a
+                                    sua equipa.</p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
@@ -398,10 +398,11 @@
                                 <span class="material-symbols-outlined text-primary" data-icon="hub">hub</span>
                             </div>
                             <div>
-                                <h4 class="font-label-sm text-label-sm uppercase text-primary mb-1">MALHA DISTRIBUÍDA
+                                <h4 class="font-label-sm text-label-sm uppercase text-primary mb-1">Integração de Dados
                                 </h4>
-                                <p class="text-sm text-on-surface-variant">Nós de processamento descentralizados
-                                    garantindo 99,999% de tempo de atividade em toda a infraestrutura global.</p>
+                                <p class="text-sm text-on-surface-variant">Conectamos todas as suas fontes — ERP, CRM,
+                                    e-commerce, redes sociais — numa plataforma unificada com pipelines de dados
+                                    automáticos e robustos.</p>
                             </div>
                         </div>
                     </div>
@@ -416,7 +417,7 @@
                         <div class="absolute inset-0 cyber-grid opacity-30 pointer-events-none"></div>
                     </div>
                     <!-- Technical Callout -->
-                    <div
+                    <!-- <div
                         class="absolute -bottom-6 -left-6 glass-card p-4 rounded-lg border-primary/40 shadow-xl max-w-[200px]">
                         <p class="font-label-sm text-[10px] text-primary uppercase mb-1">STATUS DE SINCRONIZAÇÃO</p>
                         <div class="flex items-center gap-2">
@@ -425,7 +426,7 @@
                             </div>
                             <span class="font-label-sm text-[10px] text-primary">67%</span>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </section>
@@ -436,17 +437,17 @@
                 style="background-image: repeating-linear-gradient(0deg, #000, #000 1px, transparent 1px, transparent 2px); background-size: 100% 2px;">
             </div>
             <div class="max-w-7xl mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
-                <div>
+                <!-- <div>
                     <span
-                        class="text-primary font-display-lg text-headline-lg tracking-widest uppercase mb-4 block">LUME
-                        ANALYTICS</span>
+                        class="text-primary font-display-lg text-headline-lg tracking-widest uppercase mb-4 block">DASHBOARD APP
+                    </span>
                     <p
                         class="font-label-sm text-label-sm tracking-widest text-on-surface-variant/60 max-w-sm uppercase">
-                        © 2024 LUME ANALYTICS // ESPECIFICAÇÃO TÉCNICA V4.0
+                        © 2026
                     </p>
-                </div>
+                </div> -->
                 <div class="grid grid-cols-2 gap-8">
-                    <div class="flex flex-col space-y-3">
+                    <!-- <div class="flex flex-col space-y-3">
                         <a class="font-label-sm text-label-sm tracking-widest text-on-surface-variant hover:text-primary transition-colors uppercase"
                             href="#">Documentação</a>
                         <a class="font-label-sm text-label-sm tracking-widest text-on-surface-variant hover:text-primary transition-colors uppercase"
@@ -457,7 +458,7 @@
                             href="#">Arquitetura do Sistema</a>
                         <a class="font-label-sm text-label-sm tracking-widest text-on-surface-variant hover:text-primary transition-colors uppercase"
                             href="#">Segurança</a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </footer>
@@ -511,6 +512,19 @@
                 statusText.classList.toggle('opacity-50');
             }, 800);
         }
+
+        // Mobile iframe scaling — fits 375px-wide iframe into each container
+        [['mobile-preview-container-1', 'mobile-scale-wrapper-1'],
+        ['mobile-preview-container-2', 'mobile-scale-wrapper-2']].forEach(function ([cId, wId]) {
+            const container = document.getElementById(cId);
+            const wrapper = document.getElementById(wId);
+            if (!container || !wrapper) return;
+            function updateScale() {
+                wrapper.style.zoom = container.offsetWidth / 375;
+            }
+            updateScale();
+            window.addEventListener('resize', updateScale);
+        });
     </script>
 </body>
 

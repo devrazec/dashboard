@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EcoSync Telemetry Hub</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&amp;family=Geist:wght@400;500;700&amp;family=Jetbrains+Mono:wght@400;500;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&amp;family=Space+Grotesk:wght@600;700&amp;family=Geist:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Use Tailwind Config from instructions -->
+    <script
+        id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-tertiary": "#2e1484", "primary-fixed-dim": "#00a1eb", "surface-container-lowest": "#000000", tertiary: "#b0a2ff", "surface-variant": "#002746", "surface-container": "#001b33", outline: "#5b789a", "on-secondary-fixed": "#00365e", "secondary-fixed": "#b3d4ff", "on-surface-variant": "#91add2", "secondary-fixed-dim": "#98c7ff", "tertiary-fixed": "#b3a5ff", "on-primary-fixed": "#00070f", background: "#000f20", "on-primary-fixed-variant": "#003450", "error-container": "#9f0519", primary: "#59bcff", "surface-dim": "#000f20", "surface-container-high": "#00213c", "tertiary-container": "#a391ff", "on-surface": "#d6e7ff", "surface-bright": "#002e51", "on-secondary": "#002746", "on-error-container": "#ffa8a3", "on-primary-container": "#002a42", "on-tertiary-fixed-variant": "#3a248f", "surface-container-highest": "#002746", "on-error": "#490006", "inverse-surface": "#f8f9ff", "inverse-on-surface": "#3a5777", "tertiary-fixed-dim": "#a595ff", "on-background": "#d6e7ff", "on-tertiary-fixed": "#170059", "primary-container": "#04afff", "surface-container-low": "#001428", "surface-tint": "#59bcff", surface: "#000f20", "secondary-container": "#0061a3", "primary-fixed": "#04afff", "outline-variant": "#2d4a69", "on-secondary-fixed-variant": "#00538d", "on-tertiary-container": "#220076", "on-primary": "#003653", "on-secondary-container": "#f5f8ff", secondary: "#4ea8fe", "inverse-primary": "#006595", error: "#ff716c", "error-dim": "#d7383b", "primary-dim": "#00a7f3", "secondary-dim": "#47a2f8", "tertiary-dim": "#a08ffc" }, borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" }, spacing: { unit: "4px", "margin-desktop": "32px", gutter: "16px", "container-max": "1440px", "margin-mobile": "16px" }, fontFamily: { "body-md": ["Geist"], "label-caps": ["JetBrains Mono"], "body-lg": ["Geist"], "headline-lg": ["Space Grotesk"], "data-display": ["JetBrains Mono"], "headline-md": ["Space Grotesk"], "headline-lg-mobile": ["Space Grotesk"], headline: ["Space Grotesk"], display: ["Space Grotesk"], body: ["Geist"], label: ["Jetbrains Mono"] }, fontSize: { "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-caps": ["12px", { lineHeight: "16px", letterSpacing: "0.1em", fontWeight: "500" }], "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }], "headline-lg": ["40px", { lineHeight: "48px", letterSpacing: "-0.02em", fontWeight: "700" }], "data-display": ["32px", { lineHeight: "40px", fontWeight: "700" }], "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }], "headline-lg-mobile": ["28px", { lineHeight: "34px", letterSpacing: "-0.01em", fontWeight: "700" }] } } } };</script>
+    <style>
+        body {
+            background-color: #111318;
+            color: #e2e2e8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .glass-panel {
+            background: rgba(30, 32, 36, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(132, 147, 150, 0.1);
+            position: relative;
+        }
+
+        .glass-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0, 218, 243, 0.3) 0%, transparent 100%);
+        }
+
+        .glow-sm {
+            box-shadow: 0 0 10px rgba(0, 218, 243, 0.2);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 8px rgba(0, 218, 243, 0.5);
+        }
+
+        .technical-border {
+            border-left: 2px solid #00daf3;
+        }
+
+        .chart-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s linear forwards;
+        }
+
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #00daf3;
+            border-radius: 2px;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body class="font-body-md overflow-x-hidden">
+    <!-- TopAppBar -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 bg-background/80 backdrop-blur-xl border-b border-outline-variant/30 flex justify-between items-center px-margin-mobile h-16">
+        <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary-fixed-dim"
+                style="font-variation-settings: 'FILL' 1;">hub</span>
+            <h1 class="text-headline-md font-headline-md font-bold tracking-tighter text-primary-fixed-dim">EcoSync</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <button
+                class="material-symbols-outlined text-on-surface-variant hover:text-primary-fixed-dim transition-all active:scale-95">sensors</button>
+            <div
+                class="w-8 h-8 rounded-full bg-primary-fixed-dim/20 border border-primary-fixed-dim/40 flex items-center justify-center overflow-hidden">
+                <img alt="User Profile" class="w-full h-full object-cover"
+                    src="/assets/img/img-04.png" />
+            </div>
+        </div>
+    </header>
+    <main class="pt-20 pb-32 px-margin-mobile max-w-lg mx-auto space-y-gutter">
+        <!-- Hero: Live Load Graph -->
+        <section class="glass-panel p-4 rounded-xl space-y-4">
+            <div class="flex justify-between items-end">
+                <div>
+                    <p class="font-label-caps text-label-caps text-on-surface-variant">TOTAL SYSTEM LOAD</p>
+                    <h2 class="font-data-display text-data-display text-primary-fixed-dim glow-text">14.2 <span
+                            class="text-headline-md">kW</span></h2>
+                </div>
+                <div class="text-right">
+                    <span
+                        class="font-label-caps text-label-caps text-primary-fixed-dim bg-primary/10 px-2 py-0.5 rounded border border-primary-fixed-dim/30">REAL-TIME</span>
+                </div>
+            </div>
+            <!-- SVG Mini Chart -->
+            <div class="h-32 w-full relative">
+                <svg class="w-full h-full" viewbox="0 0 400 100">
+                    <defs>
+                        <lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+                            <stop offset="0%" stop-color="#00daf3" stop-opacity="0.3"></stop>
+                            <stop offset="100%" stop-color="#00daf3" stop-opacity="0"></stop>
+                        </lineargradient>
+                    </defs>
+                    <path d="M0,80 Q50,20 100,50 T200,30 T300,70 T400,10" fill="url(#chartGradient)"></path>
+                    <path class="chart-path" d="M0,80 Q50,20 100,50 T200,30 T300,70 T400,10" fill="none"
+                        stroke="#00daf3" stroke-width="2"></path>
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-between pointer-events-none opacity-20">
+                    <div class="h-full border-r border-outline-variant border-dashed"></div>
+                    <div class="h-full border-r border-outline-variant border-dashed"></div>
+                    <div class="h-full border-r border-outline-variant border-dashed"></div>
+                </div>
+            </div>
+        </section>
+        <!-- Technical Cards: Systems Grid -->
+        <div class="grid grid-cols-2 gap-gutter">
+            <!-- Chiller Card -->
+            <div class="glass-panel p-3 rounded-xl space-y-3 technical-border">
+                <div class="flex justify-between">
+                    <span class="material-symbols-outlined text-primary-fixed-dim text-body-lg"
+                        style="font-variation-settings: 'FILL' 1;">ac_unit</span>
+                    <span class="font-label-caps text-[10px] text-on-surface-variant">CHILLER_A1</span>
+                </div>
+                <div>
+                    <p class="font-label-caps text-[10px] text-on-surface-variant">OUTPUT TEMP</p>
+                    <p class="font-data-display text-headline-md text-on-surface">6.8°C</p>
+                </div>
+                <div class="grid grid-cols-2 gap-1 pt-2 border-t border-outline-variant/20">
+                    <div>
+                        <p class="font-label-caps text-[9px] text-on-surface-variant">VOLT</p>
+                        <p class="font-label-caps text-body-md text-primary-fixed-dim">242</p>
+                    </div>
+                    <div>
+                        <p class="font-label-caps text-[9px] text-on-surface-variant">AMP</p>
+                        <p class="font-label-caps text-body-md text-primary-fixed-dim">12.4</p>
+                    </div>
+                </div>
+            </div>
+            <!-- HVAC Card -->
+            <div class="glass-panel p-3 rounded-xl space-y-3">
+                <div class="flex justify-between">
+                    <span class="material-symbols-outlined text-primary-fixed-dim text-body-lg"
+                        style="font-variation-settings: 'FILL' 1;">mode_fan</span>
+                    <span class="font-label-caps text-[10px] text-on-surface-variant">ZONE_SOUTH</span>
+                </div>
+                <div>
+                    <p class="font-label-caps text-[10px] text-on-surface-variant">HUMIDITY</p>
+                    <p class="font-data-display text-headline-md text-on-surface">42%</p>
+                </div>
+                <div class="grid grid-cols-2 gap-1 pt-2 border-t border-outline-variant/20">
+                    <div>
+                        <p class="font-label-caps text-[9px] text-on-surface-variant">RLA</p>
+                        <p class="font-label-caps text-body-md text-primary-fixed-dim">88%</p>
+                    </div>
+                    <div>
+                        <p class="font-label-caps text-[9px] text-on-surface-variant">FAN</p>
+                        <p class="font-label-caps text-body-md text-primary-fixed-dim">AUTO</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Solar Card -->
+            <div class="glass-panel p-3 rounded-xl space-y-3">
+                <div class="flex justify-between">
+                    <span class="material-symbols-outlined text-primary-fixed-dim text-body-lg"
+                        style="font-variation-settings: 'FILL' 1;">solar_power</span>
+                    <span class="font-label-caps text-[10px] text-on-surface-variant">PV_ARRAY</span>
+                </div>
+                <div>
+                    <p class="font-label-caps text-[10px] text-on-surface-variant">GEN_POWER</p>
+                    <p class="font-data-display text-headline-md text-on-surface">4.2 kW</p>
+                </div>
+                <div class="grid grid-cols-2 gap-1 pt-2 border-t border-outline-variant/20">
+                    <div>
+                        <p class="font-label-caps text-[9px] text-on-surface-variant">VDC</p>
+                        <p class="font-label-caps text-body-md text-primary-fixed-dim">380</p>
+                    </div>
+                    <div>
+                        <p class="font-label-caps text-[9px] text-on-surface-variant">EFF</p>
+                        <p class="font-label-caps text-body-md text-primary-fixed-dim">96%</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Battery Card -->
+            <div class="glass-panel p-3 rounded-xl space-y-3">
+                <div class="flex justify-between">
+                    <span class="material-symbols-outlined text-primary-fixed-dim text-body-lg"
+                        style="font-variation-settings: 'FILL' 1;">battery_charging_80</span>
+                    <span class="font-label-caps text-[10px] text-on-surface-variant">ESS_MOD_1</span>
+                </div>
+                <div>
+                    <p class="font-label-caps text-[10px] text-on-surface-variant">CHARGE</p>
+                    <p class="font-data-display text-headline-md text-on-surface">78.5%</p>
+                </div>
+                <div class="grid grid-cols-2 gap-1 pt-2 border-t border-outline-variant/20">
+                    <div>
+                        <p class="font-label-caps text-[9px] text-on-surface-variant">TEMP</p>
+                        <p class="font-label-caps text-body-md text-primary-fixed-dim">24°C</p>
+                    </div>
+                    <div>
+                        <p class="font-label-caps text-[9px] text-on-surface-variant">HEALTH</p>
+                        <p class="font-label-caps text-body-md text-primary-fixed-dim">GOOD</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Alarm Summary Panel -->
+        <section class="glass-panel p-4 rounded-xl border-l-2 border-error">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-error"
+                        style="font-variation-settings: 'FILL' 1;">warning</span>
+                    <h3 class="font-headline-md text-body-lg">Alarm Summary</h3>
+                </div>
+                <span class="text-error font-label-caps text-label-caps">2 ACTIVE</span>
+            </div>
+            <div class="space-y-3">
+                <div class="p-3 bg-error/10 border border-error/20 rounded-lg flex gap-3">
+                    <div class="mt-1">
+                        <span class="material-symbols-outlined text-error text-body-md">error</span>
+                    </div>
+                    <div>
+                        <p class="font-label-caps text-label-caps text-error">CHILLER_A1: TEMP THRESHOLD</p>
+                        <p class="text-on-surface-variant text-[13px]">Output temp &gt; 8.0°C for 5 minutes.
+                            Auto-optimization triggered.</p>
+                        <p class="text-[10px] text-on-surface-variant/60 mt-1 uppercase">Detected: 14:22:10</p>
+                    </div>
+                </div>
+                <div class="p-3 bg-surface-variant/20 border border-outline-variant/30 rounded-lg flex gap-3">
+                    <div class="mt-1">
+                        <span class="material-symbols-outlined text-primary-fixed-dim text-body-md">check_circle</span>
+                    </div>
+                    <div>
+                        <p class="font-label-caps text-label-caps text-primary-fixed-dim">SYSTEM: LOAD BALANCED</p>
+                        <p class="text-on-surface-variant text-[13px]">HVAC load shifted to battery to avoid peak
+                            pricing.</p>
+                        <p class="text-[10px] text-on-surface-variant/60 mt-1 uppercase">Optimized: 14:05:00</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Environment Info -->
+        <section class="glass-panel p-4 rounded-xl">
+            <div class="flex justify-between items-center">
+                <div class="flex gap-4">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-on-surface-variant text-body-md">thermostat</span>
+                        <span class="font-data-display text-body-md">32°C</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="material-symbols-outlined text-on-surface-variant text-body-md">humidity_percentage</span>
+                        <span class="font-data-display text-body-md">80%</span>
+                    </div>
+                </div>
+                <div
+                    class="flex items-center gap-2 bg-primary/10 px-3 py-1 rounded-full border border-primary-fixed-dim/20">
+                    <div class="w-2 h-2 rounded-full bg-primary-fixed-dim animate-pulse"></div>
+                    <span class="font-label-caps text-label-caps text-primary-fixed-dim">AQI GOOD</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- BottomNavBar -->
+    <nav
+        class="fixed bottom-0 left-0 w-full z-50 bg-surface-container-lowest/90 backdrop-blur-2xl border-t border-outline-variant/20 flex justify-around items-center px-4 pb-4 pt-2 shadow-[0_-4px_20px_rgba(0,218,243,0.15)] rounded-t-xl">
+        <a class="flex flex-col items-center justify-center text-on-surface-variant/60 px-4 py-1 hover:text-primary-fixed-dim hover:bg-surface-variant/20 transition-all rounded-xl"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+            <span class="font-label-caps text-[10px] mt-1">DASHBOARD</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-primary-fixed-dim bg-primary/10 rounded-xl px-4 py-1 border border-primary-fixed-dim/30 glow-sm scale-90 transition-transform duration-200"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="monitoring"
+                style="font-variation-settings: 'FILL' 1;">monitoring</span>
+            <span class="font-label-caps text-[10px] mt-1">USAGE</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant/60 px-4 py-1 hover:text-primary-fixed-dim hover:bg-surface-variant/20 transition-all rounded-xl"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+            <span class="font-label-caps text-[10px] mt-1">AUTOMATIONS</span>
+        </a>
+        <a class="flex flex-col items-center justify-center text-on-surface-variant/60 px-4 py-1 hover:text-primary-fixed-dim hover:bg-surface-variant/20 transition-all rounded-xl"
+            href="#">
+            <span class="material-symbols-outlined" data-icon="settings">settings</span>
+            <span class="font-label-caps text-[10px] mt-1">SETTINGS</span>
+        </a>
+    </nav>
+    <script>
+        // Simple micro-interaction for data cards
+        document.querySelectorAll('.glass-panel').forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'scale(0.98)';
+                card.style.transition = 'transform 0.1s ease';
+            });
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simulate real-time data shifts
+        setInterval(() => {
+            const dataDisplays = document.querySelectorAll('.font-data-display');
+            dataDisplays.forEach(display => {
+                if (Math.random() > 0.8) {
+                    display.classList.add('opacity-50');
+                    setTimeout(() => display.classList.remove('opacity-50'), 100);
+                }
+            });
+        }, 3000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>EcoSync - Command Center Heatmap</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00d4ff", // Electric Blue from ref
+                        "secondary": "#ff4d00", // Heatmap Orange
+                        "background": "#020617", // Deep Black/Navy
+                        "surface": "#0f172a", // Navy Surface
+                        "outline": "#1e293b",
+                        "on-surface": "#f1f5f9",
+                        "on-background": "#ffffff",
+                        "error": "#ef4444",
+                    },
+                    fontFamily: {
+                        headline: ["Space Grotesk", "sans-serif"],
+                        display: ["Space Grotesk", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #020617;
+            color: #ffffff;
+        }
+
+        .heatmap-card {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.05);
+        }
+
+        .gradient-border {
+            border-left: 3px solid;
+            border-image: linear-gradient(to bottom, #ff4d00, #00d4ff) 1;
+        }
+
+        .neon-blue {
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .neon-orange {
+            text-shadow: 0 0 10px rgba(255, 77, 0, 0.5);
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .gauge-svg {
+            transform: rotate(-90deg);
+        }
+
+        .gauge-bg {
+            stroke: #1e293b;
+            stroke-width: 4;
+            fill: none;
+        }
+
+        .gauge-progress {
+            stroke-linecap: round;
+            stroke-width: 4;
+            fill: none;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        /* Heatmap Gradient Layers */
+        .floor-strip {
+            height: 4px;
+            width: 100%;
+            margin-bottom: 1px;
+        }
+
+        .heat-high {
+            background: #ff4d00;
+        }
+
+        .heat-med-high {
+            background: #ff9d00;
+        }
+
+        .heat-med {
+            background: #facc15;
+        }
+
+        .heat-cool {
+            background: #0ea5e9;
+        }
+
+        .heat-cold {
+            background: #00d4ff;
+        }
+    </style>
+</head>
+
+<body class="font-body h-screen overflow-hidden flex flex-col antialiased">
+    <!-- Top Header -->
+    <header
+        class="w-full h-16 sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-gradient-to-tr from-secondary to-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-background text-xl font-bold">analytics</span>
+            </div>
+            <span class="font-headline font-bold text-lg tracking-tight uppercase">EcoSync <span
+                    class="text-[10px] text-primary align-top">PRO</span></span>
+        </div>
+        <div class="flex items-center gap-4">
+            <span class="material-symbols-outlined text-slate-400">notifications</span>
+            <button class="text-white">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </header>
+    <main class="flex-1 p-4 flex flex-col gap-4 overflow-y-auto">
+        <!-- Central Feature: Building Heatmap & Gauges -->
+        <section class="heatmap-card rounded-xl p-5 relative overflow-hidden">
+            <div class="flex justify-between items-start mb-6">
+                <div>
+                    <h2 class="font-headline text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Building
+                        Thermal Health</h2>
+                    <p class="text-2xl font-headline font-bold neon-blue" id="temp-status">Optimal <span
+                            class="text-xs font-normal text-slate-500" id="temp-avg">22.4°C AVG</span></p>
+                </div>
+                <div class="text-right">
+                    <span
+                        class="text-[10px] font-bold text-primary px-2 py-0.5 rounded border border-primary/30">REAL-TIME</span>
+                </div>
+            </div>
+            <div class="flex gap-6 items-center">
+                <!-- Simplified Building Stack -->
+                <div class="w-20 flex flex-col-reverse" id="heatmap-strips">
+                    <div class="floor-strip heat-cold"></div>
+                    <div class="floor-strip heat-cool"></div>
+                    <div class="floor-strip heat-cool"></div>
+                    <div class="floor-strip heat-med"></div>
+                    <div class="floor-strip heat-med-high"></div>
+                    <div class="floor-strip heat-high"></div>
+                    <div class="floor-strip heat-high"></div>
+                    <div class="floor-strip heat-med-high"></div>
+                    <div class="floor-strip heat-med"></div>
+                    <div class="floor-strip heat-cool"></div>
+                    <div class="floor-strip heat-cool"></div>
+                    <div class="floor-strip heat-cool"></div>
+                    <div class="floor-strip heat-cold"></div>
+                    <div class="floor-strip heat-cold"></div>
+                    <div class="floor-strip heat-cold"></div>
+                    <div class="floor-strip heat-cool"></div>
+                    <div class="floor-strip heat-med"></div>
+                    <div class="floor-strip heat-med-high"></div>
+                    <div class="floor-strip heat-high"></div>
+                    <div class="floor-strip heat-med-high"></div>
+                </div>
+                <!-- Gauge Cluster -->
+                <div class="flex-1 grid grid-cols-1 gap-4">
+                    <div class="flex items-center gap-4">
+                        <div class="relative w-12 h-12">
+                            <svg class="gauge-svg w-12 h-12" viewbox="0 0 36 36">
+                                <path class="gauge-bg"
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831">
+                                </path>
+                                <path class="gauge-progress stroke-secondary" id="gauge-1-path"
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    stroke-dasharray="75, 100"></path>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center text-[10px] font-bold" id="gauge-1-pct">75%
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-[9px] text-slate-500 uppercase font-bold">SA TEMP</p>
+                            <p class="text-sm font-bold neon-orange" id="gauge-1-temp">13.01°C</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="relative w-12 h-12">
+                            <svg class="gauge-svg w-12 h-12" viewbox="0 0 36 36">
+                                <path class="gauge-bg"
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831">
+                                </path>
+                                <path class="gauge-progress stroke-primary" id="gauge-2-path"
+                                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    stroke-dasharray="45, 100"></path>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center text-[10px] font-bold" id="gauge-2-pct">45%
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-[9px] text-slate-500 uppercase font-bold">SA FLOWRATE</p>
+                            <p class="text-sm font-bold neon-blue" id="gauge-2-flow">3616 L/s</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Electricity Tendency Chart -->
+        <section class="heatmap-card rounded-xl p-5">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="font-headline text-xs font-bold text-slate-400 uppercase tracking-widest">Electricity
+                    Tendency</h2>
+                <span class="text-[10px] text-primary font-bold">LIVE CONSUMPTION</span>
+            </div>
+            <div class="h-32 w-full flex items-end gap-1 relative mb-2" id="chart-bars">
+                <!-- Background Grid -->
+                <div
+                    class="absolute inset-0 flex flex-col justify-between pointer-events-none border-b border-white/10">
+                    <div class="border-t border-white/5 w-full"></div>
+                    <div class="border-t border-white/5 w-full"></div>
+                    <div class="border-t border-white/5 w-full"></div>
+                </div>
+                <!-- Glowing Cyan Columns -->
+                <div class="flex-1 bg-primary/20 border-t-2 border-primary transition-all duration-700" style="height:20%"></div>
+                <div class="flex-1 bg-primary/20 border-t-2 border-primary transition-all duration-700" style="height:25%"></div>
+                <div class="flex-1 bg-primary/20 border-t-2 border-primary transition-all duration-700" style="height:22%"></div>
+                <div class="flex-1 bg-primary/40 border-t-2 border-primary transition-all duration-700" style="height:45%"></div>
+                <div class="flex-1 bg-primary border-t-2 border-primary transition-all duration-700 shadow-[0_0_15px_rgba(0,212,255,0.4)]" style="height:85%"></div>
+                <div class="flex-1 bg-primary border-t-2 border-primary transition-all duration-700 shadow-[0_0_15px_rgba(0,212,255,0.4)]" style="height:70%"></div>
+                <div class="flex-1 bg-primary border-t-2 border-primary transition-all duration-700 shadow-[0_0_15px_rgba(0,212,255,0.4)]" style="height:80%"></div>
+                <div class="flex-1 bg-primary/60 border-t-2 border-primary transition-all duration-700" style="height:50%"></div>
+                <div class="flex-1 bg-primary/40 border-t-2 border-primary transition-all duration-700" style="height:40%"></div>
+                <div class="flex-1 bg-primary/20 border-t-2 border-primary transition-all duration-700" style="height:30%"></div>
+            </div>
+            <div class="flex justify-between text-[8px] text-slate-600 font-bold uppercase tracking-widest">
+                <span>06:00</span>
+                <span>12:00</span>
+                <span>18:00</span>
+            </div>
+            <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
+                <div>
+                    <p class="text-[9px] text-slate-500 font-bold uppercase">Peak Today</p>
+                    <p class="text-lg font-headline font-bold text-white"><span id="peak-value">88.6</span> <span class="text-[10px]">kWh</span></p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[9px] text-slate-500 font-bold uppercase">vs Benchmark</p>
+                    <p class="text-sm font-bold text-secondary" id="benchmark-value">+12.4%</p>
+                </div>
+            </div>
+        </section>
+        <!-- Running Equipment Module -->
+        <section class="heatmap-card rounded-xl p-5">
+            <h2 class="font-headline text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Running Equipment
+            </h2>
+            <div class="space-y-3">
+                <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+                        <span class="text-xs font-bold text-slate-200">Chillers</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-headline font-bold text-primary" id="chillers-count">3 <span
+                                class="text-[10px] text-slate-500">/ 8</span></span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+                        <span class="text-xs font-bold text-slate-200">Pumps</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-headline font-bold text-primary" id="pumps-count">6 <span
+                                class="text-[10px] text-slate-500">/ 16</span></span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+                    <div class="flex items-center gap-3">
+                        <div class="w-2 h-2 rounded-full bg-secondary"></div>
+                        <span class="text-xs font-bold text-slate-200">Cooling Towers</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-lg font-headline font-bold text-secondary" id="towers-count">5 <span
+                                class="text-[10px] text-slate-500">/ 7</span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Bottom Nav -->
+    <nav class="h-20 bg-background/95 backdrop-blur-2xl border-t border-white/10 flex items-center justify-around px-4">
+        <button class="flex flex-col items-center gap-1 text-primary">
+            <span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+            <span class="text-[9px] font-bold uppercase tracking-widest">Console</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-slate-500">
+            <span class="material-symbols-outlined text-2xl">leaderboard</span>
+            <span class="text-[9px] font-bold uppercase tracking-widest">Stats</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-slate-500">
+            <span class="material-symbols-outlined text-2xl">sensors</span>
+            <span class="text-[9px] font-bold uppercase tracking-widest">Network</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-slate-500">
+            <span class="material-symbols-outlined text-2xl">settings</span>
+            <span class="text-[9px] font-bold uppercase tracking-widest">Setup</span>
+        </button>
+    </nav>
+    <script>
+        const heatClasses = ['heat-cold', 'heat-cool', 'heat-med', 'heat-med-high', 'heat-high'];
+        const rand = (min, max, dec = 0) => +(Math.random() * (max - min) + min).toFixed(dec);
+        const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+        function updateDashboard() {
+            // Building temp
+            const avg = rand(20, 26, 1);
+            const status = avg < 21 ? 'Cold' : avg < 23 ? 'Optimal' : avg < 25 ? 'Warm' : 'Hot';
+            document.getElementById('temp-avg').textContent = avg + '°C AVG';
+            document.getElementById('temp-status').firstChild.textContent = status + ' ';
+
+            // Heatmap strips
+            const strips = document.querySelectorAll('#heatmap-strips .floor-strip');
+            strips.forEach(s => {
+                s.className = 'floor-strip ' + pick(heatClasses);
+            });
+
+            // Gauge 1 — SA Temp
+            const g1 = rand(55, 95);
+            const temp = rand(10, 18, 2);
+            document.getElementById('gauge-1-path').setAttribute('stroke-dasharray', g1 + ', 100');
+            document.getElementById('gauge-1-pct').textContent = g1 + '%';
+            document.getElementById('gauge-1-temp').textContent = temp + '°C';
+
+            // Gauge 2 — SA Flowrate
+            const g2 = rand(25, 80);
+            const flow = rand(2800, 4800);
+            document.getElementById('gauge-2-path').setAttribute('stroke-dasharray', g2 + ', 100');
+            document.getElementById('gauge-2-pct').textContent = g2 + '%';
+            document.getElementById('gauge-2-flow').textContent = flow + ' L/s';
+
+            // Chart bars
+            const bars = document.querySelectorAll('#chart-bars > div:not(.absolute)');
+            bars.forEach(b => { b.style.height = rand(10, 95) + '%'; });
+
+            // Peak & benchmark
+            document.getElementById('peak-value').textContent = rand(60, 120, 1);
+            const diff = rand(-20, 30, 1);
+            const bEl = document.getElementById('benchmark-value');
+            bEl.textContent = (diff >= 0 ? '+' : '') + diff + '%';
+            bEl.className = 'text-sm font-bold ' + (diff >= 0 ? 'text-secondary' : 'text-primary');
+
+            // Equipment counts
+            document.getElementById('chillers-count').innerHTML = rand(1, 8) + ' <span class="text-[10px] text-slate-500">/ 8</span>';
+            document.getElementById('pumps-count').innerHTML = rand(2, 16) + ' <span class="text-[10px] text-slate-500">/ 16</span>';
+            document.getElementById('towers-count').innerHTML = rand(1, 7) + ' <span class="text-[10px] text-slate-500">/ 7</span>';
+        }
+
+        setInterval(updateDashboard, 3000);
+    </script>
+</body>
+
+</html>
